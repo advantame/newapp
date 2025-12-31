@@ -15,7 +15,10 @@
           <button data-view="home" class="nav-btn active">Home</button>
           <button data-view="laser" class="nav-btn">グラフ生成</button>
           <button data-view="quadratic" class="nav-btn">二次関数</button>
-          <button data-view="unit-circle" class="nav-btn">三角関数</button>
+          <button data-view="complete-square" class="nav-btn">平方完成</button>
+          <button data-view="discriminant" class="nav-btn">判別式</button>
+          <button data-view="unit-circle" class="nav-btn">単位円</button>
+          <button data-view="wave-param" class="nav-btn">波形</button>
         </nav>
       </header>
 
@@ -185,6 +188,138 @@
                 <button id="circle-animate" class="btn-primary">回転開始</button>
                 <button id="circle-reset" class="btn-secondary">リセット</button>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 平方完成 -->
+        <section id="view-complete-square" class="view">
+          <div class="visualizer-container">
+            <div class="canvas-wrapper">
+              <canvas id="cs-canvas"></canvas>
+            </div>
+            <div class="control-panel">
+              <h3>平方完成</h3>
+              <p class="description">y = x² + bx + c を y = (x + p)² + q に変形</p>
+
+              <div class="slider-group">
+                <label>b: <span id="cs-b-value">4</span></label>
+                <input type="range" id="cs-b" min="-6" max="6" step="1" value="4" />
+              </div>
+
+              <div class="slider-group">
+                <label>c: <span id="cs-c-value">3</span></label>
+                <input type="range" id="cs-c" min="-6" max="6" step="1" value="3" />
+              </div>
+
+              <div class="step-display">
+                <div class="step-name" id="cs-step-name">元の式</div>
+                <div class="step-formula" id="cs-formula">y = x² + 4x + 3</div>
+                <div class="step-desc" id="cs-step-desc">まず、一般形の二次関数から始めます</div>
+              </div>
+
+              <div class="step-indicator">
+                <span class="step-dot active"></span>
+                <span class="step-dot"></span>
+                <span class="step-dot"></span>
+                <span class="step-dot"></span>
+                <span class="step-dot"></span>
+              </div>
+
+              <div class="button-group">
+                <button id="cs-prev" class="btn-secondary" disabled>前へ</button>
+                <button id="cs-next" class="btn-primary">次へ</button>
+              </div>
+              <div class="button-group">
+                <button id="cs-auto" class="btn-primary">自動再生</button>
+                <button id="cs-reset" class="btn-secondary">リセット</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 判別式 -->
+        <section id="view-discriminant" class="view">
+          <div class="visualizer-container">
+            <div class="canvas-wrapper">
+              <canvas id="disc-canvas"></canvas>
+            </div>
+            <div class="control-panel">
+              <h3>判別式 D = b² - 4ac</h3>
+              <p class="description">Dの値で、x軸との交点の数が決まる</p>
+
+              <div class="formula-display">
+                y = <span id="disc-a-value">1</span>x² + <span id="disc-b-value">0</span>x + <span id="disc-c-value">-4</span>
+              </div>
+
+              <div class="slider-group">
+                <label>a: <span id="disc-a-display">1</span></label>
+                <input type="range" id="disc-a" min="-3" max="3" step="0.5" value="1" />
+              </div>
+
+              <div class="slider-group">
+                <label>b: <span id="disc-b-display">0</span></label>
+                <input type="range" id="disc-b" min="-6" max="6" step="0.5" value="0" />
+              </div>
+
+              <div class="slider-group">
+                <label>c: <span id="disc-c-display">-4</span></label>
+                <input type="range" id="disc-c" min="-6" max="6" step="0.5" value="-4" />
+              </div>
+
+              <div class="disc-result">
+                <div class="disc-value">D = <span id="disc-d-value">16</span></div>
+                <div class="disc-status positive" id="disc-d-status">D > 0：異なる2つの実数解</div>
+                <div class="disc-solution" id="disc-solution">x = 2.00, -2.00</div>
+              </div>
+
+              <button id="disc-reset" class="btn-secondary">リセット</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 波形パラメータ -->
+        <section id="view-wave-param" class="view">
+          <div class="visualizer-container">
+            <div class="canvas-wrapper">
+              <canvas id="wave-canvas-param"></canvas>
+            </div>
+            <div class="control-panel">
+              <h3>y = A sin(Bx + C) + D</h3>
+              <p class="description">各パラメータが波形に与える影響を観察</p>
+
+              <div class="slider-group">
+                <label>A (振幅): <span id="wave-a-value">1</span></label>
+                <input type="range" id="wave-a" min="-3" max="3" step="0.1" value="1" />
+                <div class="param-hint">波の高さ</div>
+              </div>
+
+              <div class="slider-group">
+                <label>B (角周波数): <span id="wave-b-value">1</span></label>
+                <input type="range" id="wave-b" min="0.5" max="3" step="0.1" value="1" />
+                <div class="param-hint">周期 = 2π/B = <span id="wave-period">2π</span></div>
+              </div>
+
+              <div class="slider-group">
+                <label>C (位相): <span id="wave-c-value">0</span></label>
+                <input type="range" id="wave-c" min="-3.14159" max="3.14159" step="0.15708" value="0" />
+                <div class="param-hint">横方向のずれ</div>
+              </div>
+
+              <div class="slider-group">
+                <label>D (上下シフト): <span id="wave-d-value">0</span></label>
+                <input type="range" id="wave-d" min="-2" max="2" step="0.1" value="0" />
+                <div class="param-hint">中心線の位置</div>
+              </div>
+
+              <div class="checkbox-group">
+                <label>
+                  <input type="checkbox" id="wave-show-base" checked />
+                  基準のsin(x)を表示
+                </label>
+              </div>
+
+              <button id="wave-reset" class="btn-secondary">リセット</button>
             </div>
           </div>
         </section>

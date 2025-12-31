@@ -566,6 +566,151 @@ body {
    レスポンシブ
    ======================================== */
 
+/* ========================================
+   平方完成用スタイル
+   ======================================== */
+
+.step-display {
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.step-name {
+  font-size: 0.85rem;
+  color: var(--accent-blue);
+  margin-bottom: 0.5rem;
+}
+
+.step-formula {
+  font-size: 1.2rem;
+  font-family: 'Cambria Math', serif;
+  margin-bottom: 0.5rem;
+}
+
+.step-formula .highlight-b {
+  color: var(--accent-pink);
+  font-weight: bold;
+}
+
+.step-formula .highlight-p {
+  color: var(--accent-green);
+  font-weight: bold;
+}
+
+.step-formula .highlight-add {
+  color: var(--accent-green);
+}
+
+.step-formula .highlight-sub {
+  color: var(--accent-pink);
+}
+
+.step-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.step-indicator {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.step-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-color);
+  transition: all 0.3s;
+}
+
+.step-dot.active {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+
+.step-dot.done {
+  background: var(--accent-green);
+  border-color: var(--accent-green);
+}
+
+/* ========================================
+   判別式用スタイル
+   ======================================== */
+
+.disc-result {
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.disc-value {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.disc-status {
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.disc-status.positive {
+  background: rgba(74, 222, 128, 0.2);
+  color: var(--accent-green);
+}
+
+.disc-status.zero {
+  background: rgba(251, 191, 36, 0.2);
+  color: var(--accent-yellow);
+}
+
+.disc-status.negative {
+  background: rgba(255, 107, 157, 0.2);
+  color: var(--accent-pink);
+}
+
+.disc-solution {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* ========================================
+   波形パラメータ用スタイル
+   ======================================== */
+
+.checkbox-group {
+  margin: 1rem 0;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.checkbox-group input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-blue);
+}
+
+/* ========================================
+   レスポンシブ
+   ======================================== */
+
 @media (max-width: 480px) {
   :root {
     --canvas-size: 90vw;

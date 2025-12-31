@@ -24,11 +24,11 @@
 | ダークモードUI | `styles/global.css` | 完了 |
 | ナビゲーション | `main.ts` | 完了 |
 
-### Phase 2: コンテンツ拡充 [未着手]
+### Phase 2: コンテンツ拡充 [完了]
 
-- [ ] 平方完成アニメーション
-- [ ] 判別式ビジュアライザ
-- [ ] 三角関数の波形パラメータ (y = A sin(Bx + C) + D)
+- [x] 平方完成アニメーション (`visualizers/CompleteSquare.ts`)
+- [x] 判別式ビジュアライザ (`visualizers/Discriminant.ts`)
+- [x] 三角関数の波形パラメータ (`visualizers/WaveParam.ts`)
 - [ ] 変数マシンアニメーション
 - [ ] 関数当てゲーム
 

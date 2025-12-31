@@ -6,11 +6,17 @@
 import { LaserGraph } from './visualizers/LaserGraph';
 import { QuadraticParam } from './visualizers/QuadraticParam';
 import { UnitCircle } from './visualizers/UnitCircle';
+import { CompleteSquare } from './visualizers/CompleteSquare';
+import { Discriminant } from './visualizers/Discriminant';
+import { WaveParam } from './visualizers/WaveParam';
 
 // ビジュアライザーインスタンス
 let laserGraph: LaserGraph | null = null;
 let quadraticParam: QuadraticParam | null = null;
 let unitCircle: UnitCircle | null = null;
+let completeSquare: CompleteSquare | null = null;
+let discriminant: Discriminant | null = null;
+let waveParam: WaveParam | null = null;
 
 // 現在のビュー
 let currentView: string = 'home';
@@ -79,6 +85,30 @@ function initializeVisualizer(viewName: string): void {
         }
         break;
       }
+      case 'complete-square': {
+        const canvas = document.getElementById('cs-canvas') as HTMLCanvasElement;
+        if (canvas) {
+          setupCanvas(canvas);
+          completeSquare = new CompleteSquare(canvas);
+        }
+        break;
+      }
+      case 'discriminant': {
+        const canvas = document.getElementById('disc-canvas') as HTMLCanvasElement;
+        if (canvas) {
+          setupCanvas(canvas);
+          discriminant = new Discriminant(canvas);
+        }
+        break;
+      }
+      case 'wave-param': {
+        const canvas = document.getElementById('wave-canvas-param') as HTMLCanvasElement;
+        if (canvas) {
+          setupCanvas(canvas);
+          waveParam = new WaveParam(canvas);
+        }
+        break;
+      }
     }
   });
 }
@@ -113,6 +143,18 @@ function destroyCurrentVisualizer(): void {
     unitCircle.destroy();
     unitCircle = null;
   }
+  if (completeSquare) {
+    completeSquare.destroy();
+    completeSquare = null;
+  }
+  if (discriminant) {
+    discriminant.destroy();
+    discriminant = null;
+  }
+  if (waveParam) {
+    waveParam.destroy();
+    waveParam = null;
+  }
 }
 
 /**
@@ -140,6 +182,10 @@ function setupNavigation(): void {
       switch (level) {
         case '0':
           switchView('laser');
+          break;
+        case '1':
+          // 一次関数（未実装）→ 二次関数へ
+          switchView('quadratic');
           break;
         case '2':
           switchView('quadratic');
