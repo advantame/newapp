@@ -31,6 +31,22 @@
             <h2>関数を「体感」しよう</h2>
             <p>数式を暗記するのではなく、本質を理解する</p>
           </div>
+
+          <!-- 進捗表示 -->
+          <div class="progress-section">
+            <div class="progress-header">
+              <span class="progress-label">学習進捗</span>
+              <span id="progress-summary" class="progress-count">0/7 完了</span>
+            </div>
+            <div class="progress-track">
+              <div id="progress-bar" class="progress-fill" style="width: 0%"></div>
+            </div>
+            <div id="user-info" class="user-info hidden">
+              <span>あなたのID: </span>
+              <code id="user-id"></code>
+              <button id="copy-url" class="btn-small">URLをコピー</button>
+            </div>
+          </div>
           <div class="level-cards">
             <div class="level-card" data-level="0">
               <div class="level-num">0</div>

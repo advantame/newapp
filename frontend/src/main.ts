@@ -10,6 +10,7 @@ import { CompleteSquare } from './visualizers/CompleteSquare';
 import { Discriminant } from './visualizers/Discriminant';
 import { WaveParam } from './visualizers/WaveParam';
 import { Fusion } from './visualizers/Fusion';
+import { progressManager, SECTIONS, SectionKey } from './utils/progress';
 
 // ビジュアライザーインスタンス
 let laserGraph: LaserGraph | null = null;
@@ -231,16 +232,133 @@ function handleResize(): void {
 }
 
 /**
+ * 進捗表示を更新
+ */
+function updateProgressDisplay(): void {
+  // レベルカードに完了マークを付ける
+  document.querySelectorAll('.level-card').forEach((card) => {
+    const level = card.getAttribute('data-level');
+    let completed = false;
+
+    // 各レベルに対応するセクションの完了状態をチェック
+    switch (level) {
+      case '0':
+        completed = progressManager.isCompleted('laser');
+        break;
+      case '2':
+        completed = progressManager.isCompleted('quadratic') &&
+                    progressManager.isCompleted('complete-square') &&
+                    progressManager.isCompleted('discriminant');
+        break;
+      case '3':
+        completed = progressManager.isCompleted('unit-circle') &&
+                    progressManager.isCompleted('wave-param');
+        break;
+      case '4':
+        completed = progressManager.isCompleted('fusion');
+        break;
+    }
+
+    if (completed) {
+      card.classList.add('completed');
+    } else {
+      card.classList.remove('completed');
+    }
+  });
+
+  // 進捗サマリーを更新
+  const progressEl = document.getElementById('progress-summary');
+  if (progressEl) {
+    const completed = progressManager.getCompletedCount();
+    const total = progressManager.getTotalCount();
+    progressEl.textContent = `${completed}/${total} 完了`;
+
+    // プログレスバー更新
+    const progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+      progressBar.style.width = `${(completed / total) * 100}%`;
+    }
+  }
+
+  // ユーザーID表示
+  const userIdEl = document.getElementById('user-id');
+  if (userIdEl) {
+    const userId = progressManager.getUserId();
+    if (userId) {
+      userIdEl.textContent = userId;
+      userIdEl.parentElement?.classList.remove('hidden');
+    }
+  }
+}
+
+/**
+ * セクション完了を記録
+ */
+async function markSectionComplete(section: SectionKey): Promise<void> {
+  await progressManager.completeSection(section);
+  updateProgressDisplay();
+}
+
+/**
+ * 現在のビューに対応するセクションを完了としてマーク
+ */
+function markCurrentViewComplete(): void {
+  if (currentView !== 'home' && currentView in SECTIONS) {
+    markSectionComplete(currentView as SectionKey);
+  }
+}
+
+/**
  * 初期化
  */
-function init(): void {
+async function init(): Promise<void> {
+  // 進捗管理を初期化
+  await progressManager.init();
+
+  // 進捗変更リスナーを設定
+  progressManager.onChange(() => {
+    updateProgressDisplay();
+  });
+
   setupNavigation();
+
+  // URLコピーボタン
+  const copyBtn = document.getElementById('copy-url');
+  copyBtn?.addEventListener('click', async () => {
+    const url = progressManager.getShareUrl();
+    if (url) {
+      try {
+        await navigator.clipboard.writeText(url);
+        copyBtn.textContent = 'コピー完了!';
+        setTimeout(() => {
+          copyBtn.textContent = 'URLをコピー';
+        }, 2000);
+      } catch {
+        // フォールバック
+        prompt('このURLを共有:', url);
+      }
+    }
+  });
+
+  // 初期進捗表示
+  updateProgressDisplay();
 
   // リサイズ対応（デバウンス付き）
   let resizeTimeout: number;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = window.setTimeout(handleResize, 250);
+  });
+
+  // 各ビジュアライザーで一定時間操作したら完了とみなす
+  let interactionTimer: number | null = null;
+  document.addEventListener('input', () => {
+    if (currentView !== 'home') {
+      if (interactionTimer) clearTimeout(interactionTimer);
+      interactionTimer = window.setTimeout(() => {
+        markCurrentViewComplete();
+      }, 5000); // 5秒操作したら完了
+    }
   });
 
   console.log('関数の本質 - 初期化完了');

@@ -10,3 +10,8 @@ bindings = [
 [[migrations]]
 tag = "v1"
 new_sqlite_classes = ["Room"]
+
+# KV for user progress storage (optional, create with: wrangler kv namespace create PROGRESS)
+# [[kv_namespaces]]
+# binding = "PROGRESS"
+# id = "<your-kv-namespace-id>"
