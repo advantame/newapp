@@ -1,32 +1,196 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>New App</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font-family: system-ui, sans-serif; background: #1a1a2e; color: #eee; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-      #app { text-align: center; padding: 2rem; }
-      h1 { margin-bottom: 1rem; }
-      #status { padding: 0.5rem 1rem; border-radius: 4px; background: #16213e; margin: 1rem 0; }
-      #messages { max-height: 300px; overflow-y: auto; background: #0f0f23; padding: 1rem; border-radius: 8px; margin: 1rem 0; min-width: 300px; text-align: left; }
-      .msg { padding: 0.25rem 0; border-bottom: 1px solid #333; }
-      input { padding: 0.5rem; border: none; border-radius: 4px; margin-right: 0.5rem; }
-      button { padding: 0.5rem 1rem; border: none; border-radius: 4px; background: #e94560; color: white; cursor: pointer; }
-      button:hover { background: #ff6b6b; }
-    </style>
+    <title>関数の本質 - 高校数学ビジュアル学習</title>
+    <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body>
     <div id="app">
-      <h1>New App</h1>
-      <div id="status">Connecting...</div>
-      <div id="messages"></div>
-      <div>
-        <input type="text" id="input" placeholder="Type a message..." />
-        <button id="send">Send</button>
-      </div>
+      <!-- ヘッダー -->
+      <header id="header">
+        <h1>関数の本質</h1>
+        <nav id="nav">
+          <button data-view="home" class="nav-btn active">Home</button>
+          <button data-view="laser" class="nav-btn">グラフ生成</button>
+          <button data-view="quadratic" class="nav-btn">二次関数</button>
+          <button data-view="unit-circle" class="nav-btn">三角関数</button>
+        </nav>
+      </header>
+
+      <!-- メインコンテンツ -->
+      <main id="main">
+        <!-- ホーム画面 -->
+        <section id="view-home" class="view active">
+          <div class="home-intro">
+            <h2>関数を「体感」しよう</h2>
+            <p>数式を暗記するのではなく、本質を理解する</p>
+          </div>
+          <div class="level-cards">
+            <div class="level-card" data-level="0">
+              <div class="level-num">0</div>
+              <div class="level-title">関数の入口</div>
+              <div class="level-desc">変数・代入・グラフの誕生</div>
+            </div>
+            <div class="level-card" data-level="1">
+              <div class="level-num">1</div>
+              <div class="level-title">一次関数</div>
+              <div class="level-desc">傾きと切片</div>
+            </div>
+            <div class="level-card" data-level="2">
+              <div class="level-num">2</div>
+              <div class="level-title">二次関数</div>
+              <div class="level-desc">放物線の世界</div>
+            </div>
+            <div class="level-card" data-level="3">
+              <div class="level-num">3</div>
+              <div class="level-title">三角関数</div>
+              <div class="level-desc">円と波</div>
+            </div>
+            <div class="level-card locked" data-level="4">
+              <div class="level-num">4</div>
+              <div class="level-title">融合問題</div>
+              <div class="level-desc">最終チャレンジ</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- レーザー刻印グラフ -->
+        <section id="view-laser" class="view">
+          <div class="visualizer-container">
+            <div class="canvas-wrapper">
+              <canvas id="laser-canvas"></canvas>
+            </div>
+            <div class="control-panel">
+              <h3>グラフ生成</h3>
+              <p class="description">xを動かすと、関数の値が計算され、点が打たれていきます</p>
+
+              <div class="function-select">
+                <label>関数を選択:</label>
+                <select id="laser-function">
+                  <option value="linear">y = 2x + 1 (一次関数)</option>
+                  <option value="quadratic" selected>y = x² (二次関数)</option>
+                  <option value="cubic">y = x³ (三次関数)</option>
+                  <option value="sin">y = sin(x) (正弦関数)</option>
+                </select>
+              </div>
+
+              <div class="slider-group">
+                <label>x の値: <span id="laser-x-value">0</span></label>
+                <input type="range" id="laser-x" min="-5" max="5" step="0.1" value="-5" />
+              </div>
+
+              <div class="calculation-display" id="laser-calc">
+                <div class="calc-step">x = <span id="calc-x">-5</span></div>
+                <div class="calc-step">f(x) = <span id="calc-fx">25</span></div>
+                <div class="calc-step">点 (<span id="calc-point-x">-5</span>, <span id="calc-point-y">25</span>)</div>
+              </div>
+
+              <div class="button-group">
+                <button id="laser-play" class="btn-primary">自動再生</button>
+                <button id="laser-reset" class="btn-secondary">リセット</button>
+              </div>
+
+              <div class="speed-control">
+                <label>速度:</label>
+                <input type="range" id="laser-speed" min="1" max="10" value="5" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 二次関数パラメータ -->
+        <section id="view-quadratic" class="view">
+          <div class="visualizer-container">
+            <div class="canvas-wrapper">
+              <canvas id="quadratic-canvas"></canvas>
+            </div>
+            <div class="control-panel">
+              <h3>y = a(x - p)² + q</h3>
+              <p class="description">各パラメータを動かして、グラフがどう変わるか観察しよう</p>
+
+              <div class="formula-display" id="quadratic-formula">
+                y = <span class="param-a">1</span>(x - <span class="param-p">0</span>)² + <span class="param-q">0</span>
+              </div>
+
+              <div class="slider-group">
+                <label>a (開き具合): <span id="quad-a-value">1</span></label>
+                <input type="range" id="quad-a" min="-3" max="3" step="0.1" value="1" />
+                <div class="param-hint">正: 上に開く / 負: 下に開く / |a|大: 細い</div>
+              </div>
+
+              <div class="slider-group">
+                <label>p (横移動): <span id="quad-p-value">0</span></label>
+                <input type="range" id="quad-p" min="-5" max="5" step="0.1" value="0" />
+                <div class="param-hint">頂点のx座標</div>
+              </div>
+
+              <div class="slider-group">
+                <label>q (縦移動): <span id="quad-q-value">0</span></label>
+                <input type="range" id="quad-q" min="-5" max="5" step="0.1" value="0" />
+                <div class="param-hint">頂点のy座標</div>
+              </div>
+
+              <div class="info-box">
+                <div class="info-item">頂点: (<span id="vertex-x">0</span>, <span id="vertex-y">0</span>)</div>
+                <div class="info-item">軸: x = <span id="axis-x">0</span></div>
+              </div>
+
+              <button id="quad-reset" class="btn-secondary">リセット</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 単位円 -->
+        <section id="view-unit-circle" class="view">
+          <div class="visualizer-container dual">
+            <div class="canvas-wrapper">
+              <canvas id="circle-canvas"></canvas>
+            </div>
+            <div class="canvas-wrapper">
+              <canvas id="wave-canvas"></canvas>
+            </div>
+            <div class="control-panel wide">
+              <h3>単位円と三角関数</h3>
+              <p class="description">円周上の点の座標がsin, cosになる</p>
+
+              <div class="slider-group">
+                <label>角度 θ: <span id="angle-value">0</span>°</label>
+                <input type="range" id="angle-slider" min="0" max="360" step="1" value="0" />
+              </div>
+
+              <div class="trig-display">
+                <div class="trig-value">
+                  <span class="trig-label">cos θ =</span>
+                  <span id="cos-value" class="value-cos">1.000</span>
+                </div>
+                <div class="trig-value">
+                  <span class="trig-label">sin θ =</span>
+                  <span id="sin-value" class="value-sin">0.000</span>
+                </div>
+              </div>
+
+              <div class="special-angles">
+                <span>特殊角:</span>
+                <button class="angle-btn" data-angle="0">0°</button>
+                <button class="angle-btn" data-angle="30">30°</button>
+                <button class="angle-btn" data-angle="45">45°</button>
+                <button class="angle-btn" data-angle="60">60°</button>
+                <button class="angle-btn" data-angle="90">90°</button>
+                <button class="angle-btn" data-angle="180">180°</button>
+              </div>
+
+              <div class="button-group">
+                <button id="circle-animate" class="btn-primary">回転開始</button>
+                <button id="circle-reset" class="btn-secondary">リセット</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
