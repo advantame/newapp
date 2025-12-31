@@ -708,6 +708,77 @@ body {
 }
 
 /* ========================================
+   融合問題用スタイル
+   ======================================== */
+
+.canvas-label {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+.fusion-explanation {
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.fusion-explanation .step {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0.25rem 0;
+}
+
+.fusion-result {
+  background: var(--bg-primary);
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.result-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 0.75rem 0;
+}
+
+.value-highlight {
+  color: var(--accent-yellow);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.label-min {
+  color: var(--accent-green);
+}
+
+.value-min {
+  color: var(--accent-green);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.label-max {
+  color: var(--accent-pink);
+}
+
+.value-max {
+  color: var(--accent-pink);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* ========================================
    レスポンシブ
    ======================================== */
 

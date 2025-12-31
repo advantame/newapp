@@ -9,6 +9,7 @@ import { UnitCircle } from './visualizers/UnitCircle';
 import { CompleteSquare } from './visualizers/CompleteSquare';
 import { Discriminant } from './visualizers/Discriminant';
 import { WaveParam } from './visualizers/WaveParam';
+import { Fusion } from './visualizers/Fusion';
 
 // ビジュアライザーインスタンス
 let laserGraph: LaserGraph | null = null;
@@ -17,6 +18,7 @@ let unitCircle: UnitCircle | null = null;
 let completeSquare: CompleteSquare | null = null;
 let discriminant: Discriminant | null = null;
 let waveParam: WaveParam | null = null;
+let fusion: Fusion | null = null;
 
 // 現在のビュー
 let currentView: string = 'home';
@@ -109,6 +111,16 @@ function initializeVisualizer(viewName: string): void {
         }
         break;
       }
+      case 'fusion': {
+        const circleCanvas = document.getElementById('fusion-circle') as HTMLCanvasElement;
+        const quadCanvas = document.getElementById('fusion-quad') as HTMLCanvasElement;
+        if (circleCanvas && quadCanvas) {
+          setupCanvas(circleCanvas);
+          setupCanvas(quadCanvas);
+          fusion = new Fusion(circleCanvas, quadCanvas);
+        }
+        break;
+      }
     }
   });
 }
@@ -155,6 +167,10 @@ function destroyCurrentVisualizer(): void {
     waveParam.destroy();
     waveParam = null;
   }
+  if (fusion) {
+    fusion.destroy();
+    fusion = null;
+  }
 }
 
 /**
@@ -193,8 +209,10 @@ function setupNavigation(): void {
         case '3':
           switchView('unit-circle');
           break;
+        case '4':
+          switchView('fusion');
+          break;
         default:
-          // 他のレベルは未実装
           break;
       }
     });

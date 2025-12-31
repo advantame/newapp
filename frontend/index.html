@@ -19,6 +19,7 @@
           <button data-view="discriminant" class="nav-btn">判別式</button>
           <button data-view="unit-circle" class="nav-btn">単位円</button>
           <button data-view="wave-param" class="nav-btn">波形</button>
+          <button data-view="fusion" class="nav-btn">融合</button>
         </nav>
       </header>
 
@@ -51,10 +52,10 @@
               <div class="level-title">三角関数</div>
               <div class="level-desc">円と波</div>
             </div>
-            <div class="level-card locked" data-level="4">
+            <div class="level-card" data-level="4">
               <div class="level-num">4</div>
               <div class="level-title">融合問題</div>
-              <div class="level-desc">最終チャレンジ</div>
+              <div class="level-desc">三角×二次関数</div>
             </div>
           </div>
         </section>
@@ -320,6 +321,69 @@
               </div>
 
               <button id="wave-reset" class="btn-secondary">リセット</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 融合問題 -->
+        <section id="view-fusion" class="view">
+          <div class="visualizer-container dual">
+            <div class="canvas-wrapper">
+              <canvas id="fusion-circle"></canvas>
+              <div class="canvas-label">t = sinθ</div>
+            </div>
+            <div class="canvas-wrapper">
+              <canvas id="fusion-quad"></canvas>
+              <div class="canvas-label">g(t) = t² + at + b</div>
+            </div>
+            <div class="control-panel wide">
+              <h3>三角関数 × 二次関数</h3>
+              <p class="description">f(θ) = sin²θ + a·sinθ + b の最大・最小を求める</p>
+
+              <div class="fusion-explanation">
+                <div class="step">1. t = sinθ と置換 → -1 ≤ t ≤ 1</div>
+                <div class="step">2. g(t) = t² + at + b の定義域制限付き最大最小</div>
+              </div>
+
+              <div class="slider-group">
+                <label>θ (角度): <span id="fusion-theta-value">0</span>°</label>
+                <input type="range" id="fusion-theta" min="0" max="360" step="1" value="0" />
+              </div>
+
+              <div class="slider-group">
+                <label>a: <span id="fusion-a-value">-2</span></label>
+                <input type="range" id="fusion-a" min="-4" max="4" step="0.5" value="-2" />
+              </div>
+
+              <div class="slider-group">
+                <label>b: <span id="fusion-b-value">0</span></label>
+                <input type="range" id="fusion-b" min="-3" max="3" step="0.5" value="0" />
+              </div>
+
+              <div class="fusion-result">
+                <div class="result-row">
+                  <span>t = sinθ =</span>
+                  <span id="fusion-t-value" class="value-highlight">0.000</span>
+                </div>
+                <div class="result-row">
+                  <span>g(t) =</span>
+                  <span id="fusion-gt-value" class="value-highlight">0.000</span>
+                </div>
+                <div class="result-divider"></div>
+                <div class="result-row">
+                  <span class="label-min">最小値:</span>
+                  <span id="fusion-min" class="value-min">-1.00</span>
+                </div>
+                <div class="result-row">
+                  <span class="label-max">最大値:</span>
+                  <span id="fusion-max" class="value-max">3.00</span>
+                </div>
+              </div>
+
+              <div class="button-group">
+                <button id="fusion-animate" class="btn-primary">自動回転</button>
+                <button id="fusion-reset" class="btn-secondary">リセット</button>
+              </div>
             </div>
           </div>
         </section>
